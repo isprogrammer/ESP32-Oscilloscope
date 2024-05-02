@@ -6,30 +6,38 @@
 #include <SPI.h>
 #include "esp_adc_cal.h"
 #include "filters.h"
+#include <XPT2046_Touchscreen.h>
 
 //#define DEBUG_SERIAL
 //#define DEBUG_BUFF
 #define DELAY 1000
 
 // Width and height of sprite
-#define WIDTH  240
-#define HEIGHT 280
+#define WIDTH  240 //240
+#define HEIGHT 320 //280
 
-#define ADC_CHANNEL   ADC1_CHANNEL_5  // GPIO33
+#define ADC_CHANNEL   ADC1_CHANNEL_7  // GPIO35
 #define NUM_SAMPLES   1000            // number of samples
 #define I2S_NUM         (0)
 #define BUFF_SIZE 50000
 #define B_MULT BUFF_SIZE/NUM_SAMPLES
-#define BUTTON_Ok        32
-#define BUTTON_Plus        15
-#define BUTTON_Minus        35
-#define BUTTON_Back        34
+//#define BUTTON_Ok        0
+//#define BUTTON_Plus        1
+//#define BUTTON_Minus        3
+//#define BUTTON_Back        27
+
+#define XPT2046_IRQ 36
+#define XPT2046_MOSI 32
+#define XPT2046_MISO 39
+#define XPT2046_CLK 25
+#define XPT2046_CS 33
 
 TFT_eSPI    tft = TFT_eSPI();         // Declare object "tft"
 
 TFT_eSprite spr = TFT_eSprite(&tft);  // Declare Sprite object "spr" with pointer to "tft" object
 
-
+SPIClass mySpi = SPIClass(VSPI);
+XPT2046_Touchscreen ts(XPT2046_CS, XPT2046_IRQ);
 
 esp_adc_cal_characteristics_t adc_chars;
 
@@ -92,6 +100,8 @@ bool new_data = false;
 bool menu_action = false;
 uint8_t digital_wave_option = 0; //0-auto | 1-analog | 2-digital data (SERIAL/SPI/I2C/etc)
 int btnok,btnpl,btnmn,btnbk;
+int x,y;
+bool touched = false;
 void IRAM_ATTR btok()
 {
   btnok = 1;
@@ -115,14 +125,18 @@ void setup() {
 
   setup_screen();
 
-  pinMode(BUTTON_Ok , INPUT);
-  pinMode(BUTTON_Plus , INPUT);
-  pinMode(BUTTON_Minus , INPUT);
-  pinMode(BUTTON_Back , INPUT);
-  attachInterrupt(BUTTON_Ok, btok, RISING);
-  attachInterrupt(BUTTON_Plus, btplus, RISING);
-  attachInterrupt(BUTTON_Minus, btminus, RISING);
-  attachInterrupt(BUTTON_Back, btback, RISING);
+  mySpi.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS);
+  ts.begin(mySpi);
+  ts.setRotation(3);
+
+  //pinMode(BUTTON_Ok , INPUT);
+  //pinMode(BUTTON_Plus , INPUT);
+  //pinMode(BUTTON_Minus , INPUT);
+  //pinMode(BUTTON_Back , INPUT);
+  //attachInterrupt(BUTTON_Ok, btok, RISING);
+  //attachInterrupt(BUTTON_Plus, btplus, RISING);
+  //attachInterrupt(BUTTON_Minus, btminus, RISING);
+  //attachInterrupt(BUTTON_Back, btback, RISING);
 
   characterize_adc();
 #ifdef DEBUG_BUF
@@ -155,11 +169,10 @@ void core0_task( void * pvParameters ) {
 
   for (;;) {
     menu_handler();
-
+    touchpad_read();
     if (new_data || menu_action) {
       new_data = false;
       menu_action = false;
-
       updating_screen = true;
       update_screen(i2s_buff, RATE);
       updating_screen = false;
@@ -245,6 +258,36 @@ void core1_task( void * pvParameters ) {
       vTaskDelay(pdMS_TO_TICKS(300));
     }
   }
+}
+
+void touchpad_read()
+{
+    if (ts.touched()) {
+        TS_Point p = ts.getPoint();
+        x = map(p.x, 220, 3850, 1, 320);
+        y = map(p.y, 310, 3773, 1, 240);
+        if(x < 110 && y < 60 && !touched) {
+          btnmn = 1;
+          touched = true;     }
+        if(x > 210 && y < 60 && !touched) {
+          btnpl = 1;
+          touched = true; 
+        }
+        if(x < 110 && y > 160 && !touched) {
+          btnbk = 1;
+          touched = true;
+        }
+        if(x > 210 && y > 160 && !touched) {
+          btnok = 1;
+          touched = true;
+        }        
+    } else {
+        touched = false;
+        btnok = 0;
+        btnbk = 0;
+        btnpl = 0;
+        btnmn = 0;
+    }
 }
 
 void loop() {}

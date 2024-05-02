@@ -1,7 +1,7 @@
 void setup_screen() {
   // Initialise the TFT registers
   tft.init();
-  tft.setRotation(1);
+  tft.setRotation(3);
 
   // Optionally set colour depth to 8 or 16 bits, default is 16 if not spedified
    spr.setColorDepth(8);
@@ -12,7 +12,7 @@ void setup_screen() {
   tft.fillScreen(TFT_BLACK);
 }
 
-int data[280] = {0};
+int data[320] = {0};
 
 float to_scale(float reading) {
   float temp = WIDTH -
@@ -151,7 +151,7 @@ void draw_sprite(float freq,
 
   int shift = 150;
   if (menu) {
-    spr.drawLine( 0, 120, 280, 120, TFT_WHITE); //center line
+    spr.drawLine( 0, 120, 320, 120, TFT_WHITE); //center line
     spr.fillRect(shift, 0, 102, 135, TFT_BLACK);
     spr.drawRect(shift, 0, 102, 135, TFT_WHITE);
     spr.fillRect(shift + 1, 3 + 10 * (opt - 1), 100, 11, TFT_RED);
@@ -194,14 +194,14 @@ void draw_sprite(float freq,
     }
   }
   else if (info) {
-    spr.drawLine( 0, 120, 280, 120, TFT_WHITE); //center line
+    spr.drawLine( 0, 120, 320, 120, TFT_WHITE); //center line
     //spr.drawRect(shift + 10, 0, 280 - shift - 20, 30, TFT_WHITE);
     spr.drawString("P-P: " + String(max_v - min_v) + "V",  shift + 15, 5);
     spr.drawString(frequency,  shift + 15, 15);
     spr.drawString(String(int(v_div)) + "mV/div",  shift - 100, 5);
     spr.drawString(String(int(s_div)) + "uS/div",  shift - 100, 15);
     String offset_line = String((2.0 * v_div) / 1000.0 - offset) + "V";
-    spr.drawString(offset_line,  shift + 100, 112);
+    spr.drawString(offset_line,  shift + 140, 112);
   }
 
 
@@ -213,7 +213,7 @@ void draw_sprite(float freq,
 
 void draw_grid() {
 
-  for (int i = 0; i < 28; i++) {
+  for (int i = 0; i < 32; i++) {
     spr.drawPixel(i * 10, 40, TFT_WHITE);
     spr.drawPixel(i * 10, 80, TFT_WHITE);
     spr.drawPixel(i * 10, 120, TFT_WHITE);
@@ -221,7 +221,7 @@ void draw_grid() {
     spr.drawPixel(i * 10, 200, TFT_WHITE);
   }
   for (int i = 0; i < 240; i += 10) {
-    for (int j = 0; j < 280; j += 40) {
+    for (int j = 0; j < 320; j += 40) {
       spr.drawPixel(j, i, TFT_WHITE);
     }
   }
@@ -243,7 +243,7 @@ void draw_channel1(uint32_t trigger0, uint32_t trigger1, uint16_t *i2s_buff, flo
   trigger0 += index_offset;  
   uint32_t old_index = trigger0;
   float n_data = 0, o_data = to_scale(i2s_buff[trigger0]);
-  for (uint32_t i = 1; i < 280; i++) {
+  for (uint32_t i = 1; i < 320; i++) {
     uint32_t index = trigger0 + (uint32_t)((i + 1) * data_per_pixel);
     if (index < BUFF_SIZE) {
       if (full_pix && s_div > 40 && current_filter == 0) {

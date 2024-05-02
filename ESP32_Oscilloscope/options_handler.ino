@@ -1,4 +1,27 @@
-int voltage_division[6] = { //screen has 4 divisions, 31 pixels each (125 pixels of height)
+int voltage_division[29] = { //screen has 4 divisions, 31 pixels each (125 pixels of height)
+  1950,
+  1850,
+  1800,
+  1700,
+  1650,
+  1600,
+  1500,
+  1450,
+  1400, 
+  1300,
+  1250,
+  1200,
+  1100,
+  1050, 
+  1000,
+  950,
+  900,
+  850,
+  800,
+  750,
+  700,
+  650,
+  600,
   550, //fullscreen 3.3V peak-peak
   500,
   375,
@@ -49,7 +72,7 @@ void button() {
             if (volts_index >= sizeof(voltage_division) / sizeof(*voltage_division)) {
               volts_index = 0;
             }
-            btnpl = 0;
+            btnpl = 0;                                                                                                                                                                                                                             
           }
           else if (btnmn == 1) {
             volts_index--;
@@ -91,10 +114,10 @@ void button() {
             btnpl = 0;
           }
 
-          if (offset > 3.3)
-            offset = 3.3;
-          if (offset < -3.3)
-            offset = -3.3;
+          if (offset > 6.6)
+            offset = 6.6;
+          if (offset < -6.6)
+            offset = -6.6;
 
           break;
 
