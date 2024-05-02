@@ -9,6 +9,9 @@ To compile this project with Arduino IDE, it is necessary to install ESP32 Core 
 ``` https://github.com/espressif/arduino-esp32/releases/download/1.0.5-rc6/package_esp32_dev_index.json ```
 <br><br>
 After that you can install `1.0.5-rc6` ESP32 Core version in Boards manager.
+<br><br>
+Touchscreen is used for controls: <br>
+Top left corner - `minus button`, top right - `plus`, bottom left - `back button`, bottom right - `menu button`.
 
 
 <hr>
