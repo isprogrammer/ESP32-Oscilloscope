@@ -1,6 +1,6 @@
 # [DIY-Oscilloscope](https://circuitdigest.com/microcontroller-projects/diy-esp32-oscilloscope)
 
-This is a version adapted for <a href="https://ali.ski/iqD_a">ESP32-2432S028 Board</a>
+This is a version adapted for <a href="https://ali.ski/iqD_a">ESP32-2432S028 Board (version with Type C)</a>
 
 
 <br>
