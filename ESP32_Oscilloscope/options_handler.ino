@@ -35,7 +35,7 @@ int voltage_division[29] = { //screen has 4 divisions, 31 pixels each (125 pixel
    thus, the time division is the number
    of samples per screen division
 */
-float time_division[9] = { //screen has 4 divisions, 60 pixel each (240 pixel of width)
+float time_division[11] = { //screen has 4 divisions, 60 pixel each (240 pixel of width)
   10,
   25,
   50,
@@ -44,7 +44,9 @@ float time_division[9] = { //screen has 4 divisions, 60 pixel each (240 pixel of
   500,
   1000,
   2500,
-  5000
+  5000,
+  7500,
+  9000
 };
 //,   //1Mhz    35ms of data (of 50ms possible)
 //  10000,  //100khz  70ms/500ms

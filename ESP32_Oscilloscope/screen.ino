@@ -1,7 +1,7 @@
 void setup_screen() {
   // Initialise the TFT registers
   tft.init();
-  tft.setRotation(3);
+  tft.setRotation(1);
 
   // Optionally set colour depth to 8 or 16 bits, default is 16 if not spedified
    spr.setColorDepth(8);
@@ -13,6 +13,15 @@ void setup_screen() {
 }
 
 int data[320] = {0};
+
+float to_scale(float reading) {
+  float temp = WIDTH - (((reading / 4095.0) + (offset / 3.3)) * 3300 / (v_div * 6)) * (WIDTH - 1) - 1; return temp;
+}
+
+float to_voltage(float reading) { return reading / 4095.0 * 3.3; }
+
+uint32_t from_voltage(float voltage) { return ((uint32_t)(voltage / 3.3 * 4095)) ; }
+/*
 
 float to_scale(float reading) {
   float temp = WIDTH -
@@ -38,6 +47,8 @@ float to_voltage(float reading) {
 uint32_t from_voltage(float voltage) {
   return uint32_t(voltage / 3.3 * 4095 + 20480.0);
 }
+
+*/
 
 void update_screen(uint16_t *i2s_buff, float sample_rate) {
 

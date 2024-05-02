@@ -127,7 +127,7 @@ void setup() {
 
   mySpi.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS);
   ts.begin(mySpi);
-  ts.setRotation(3);
+  ts.setRotation(1);
 
   //pinMode(BUTTON_Ok , INPUT);
   //pinMode(BUTTON_Plus , INPUT);
