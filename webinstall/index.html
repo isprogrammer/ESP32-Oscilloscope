@@ -5,37 +5,77 @@
     @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
     * {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Roboto';
     }
 
     body {
       background-color: #181a1b;
       color: white;
+	  text-align: center;
+	  max-width: 65%;
+	  margin: auto;
     }
 
     .main {
       width: fit-content;
-      margin: auto;
-      max-width: 750px;
+	  margin-left: auto;
+	  margin-right: auto;
+
     }
 
     .main a {
-      color: #F44;
-    }
-
-    .install {
-      margin-bottom: 300px;
+      color: #26867d;
     }
 	
-    }
-
-    }
+	.center {
+	  display: block;
+	  margin-left: auto;
+	  margin-right: auto;
+	  width: 100%;
+	  max-width: 650px;
+	}
+	.btn {
+	  margin-top: 20px;
+	  margin-left: auto;
+	  margin-right: auto;
+	  width: 100%;
+	}
+	
+	hr {
+	  border: 1px solid #26867d;
+	}
+	
+	.caption {
+	  width: 100%;
+	  margin: auto;
+	  text-align: left;
+	}
   </style>
-  <script type="module" src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js?module"></script>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
 </head>
 
 <body>
+<section class="main">
+<h2>ESP32 Oscilloscope Web Installer</h2>
+<hr>
+<p>
+	This is a version adapted for <a href="https://ali.ski/iqD_a">ESP32-2432S028 Board (version with Type C)</a>
+</p>
+<img src="https://github.com/ivan-rio/ESP32-Oscilloscope/raw/main/images/IMG_4036.JPG" class="center">
+
+<div class="caption">
+<h3>Install</h3>
+<p>
+Press "Connect" and choose your COM port.
+<br><br>
+If flashing don't starts, try hold "Boot" button on ESP32 while pressing "Install" button.
+</p>
+</div>
+</section>
+
+<div class="btn">
 <esp-web-install-button
   manifest="https://ivan-rio.github.io/ESP32-Oscilloscope/webinstall/manifest.json"
 ></esp-web-install-button>
+</div>
 </body>
