@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    * {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: #181a1b;
+      color: white;
+    }
+
+    .main {
+      width: fit-content;
+      margin: auto;
+      max-width: 750px;
+    }
+
+    .main a {
+      color: #F44;
+    }
+
+    .install {
+      margin-bottom: 300px;
+    }
+
+    .install .iconify {
+      color: green;
+      filter: drop-shadow(0 0 0.75rem lime);
+    }
+
+    }
+  </style>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</head>
+
+<body>
+<esp-web-install-button
+  manifest="https://ivan-rio.github.io/ESP32-Oscilloscope/_site/manifest.json"
+></esp-web-install-button>
+</body>
