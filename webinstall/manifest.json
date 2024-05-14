@@ -1,9 +1,9 @@
 {
-  "name": "ESP32-Oscilloscope",
+  "name": "ESP32_Oscilloscope",
+  "new_install_prompt_erase": true,
   "builds": [
     {
       "chipFamily": "ESP32",
-      "improv": true,
       "parts": [
         { "path": "bootloader_qio_80m.bin", "offset": 4096 },
         { "path": "ESP32_Oscilloscope.ino.partitions.bin", "offset": 32768 },
