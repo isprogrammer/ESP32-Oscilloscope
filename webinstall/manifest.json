@@ -1,6 +1,5 @@
 {
   "name": "ESP32_Oscilloscope",
-  "new_install_prompt_erase": true,
   "builds": [
     {
       "chipFamily": "ESP32",
