@@ -1,5 +1,5 @@
 {
-  "name": "ESP32_Oscilloscope",
+  "name": "Oscilloscope",
   "builds": [
     {
       "chipFamily": "ESP32",
