@@ -14,8 +14,8 @@ void configure_i2s(int rate) {
     .dma_buf_len = NUM_SAMPLES,                                                   // number of samples
     .use_apll = 0,                                                                // no Audio PLL
   };
-  adc1_config_channel_atten(ADC_CHANNEL, ADC_ATTEN_11db);
-  adc1_config_width(ADC_WIDTH_12Bit);
+  adc1_config_channel_atten(ADC_CHANNEL, ADC_ATTEN_DB_12);
+  adc1_config_width(ADC_WIDTH_BIT_12);
   i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
 
   i2s_set_adc_mode(ADC_UNIT_1, ADC_CHANNEL);
@@ -25,8 +25,8 @@ void configure_i2s(int rate) {
 
 void ADC_Sampling(uint16_t *i2s_buff){
   for (int i = 0; i < B_MULT; i++) {
-    //TODO i2s_read_bytes is deprecated, replace with new function
-    i2s_read_bytes(I2S_NUM_0, (char*)&i2s_buff[i * NUM_SAMPLES],  NUM_SAMPLES * sizeof(uint16_t), portMAX_DELAY);    
+    size_t bytes_read;
+    i2s_read(I2S_NUM_0, &i2s_buff[i * NUM_SAMPLES], NUM_SAMPLES * sizeof(uint16_t), &bytes_read, portMAX_DELAY);
   }
 }
 

@@ -12,7 +12,7 @@
 //#define DEBUG_BUFF
 #define DELAY 1000
 
-// Width and height of sprite
+// Width and height of sprite 
 #define WIDTH  240 //240
 #define HEIGHT 320 //280
 
